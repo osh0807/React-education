@@ -26,6 +26,12 @@ const userSchema = mongoose.Schema({
     type: Number,
   },
 });
+
+userSchema.methods.comparePassword = function (plainPassword, cb) {
+  compare(plainPassword, this.password, function (err, isMatch) {
+    if (err) return cb(err), cb(null, isMatch);
+  });
+};
 const User = mongoose.model("User", userSchema);
 
 module.exports = { User };
